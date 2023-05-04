@@ -1,0 +1,26 @@
+<div class="mt-4">
+  <div class="container">
+    <h3>My courses</h3>
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Slug</th>
+          <th scope="col">Thoi gian tao</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each courses}}
+          <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{this.title}}</td>
+            <td>{{this.slug}}</td>
+            <td>{{this.createdAt}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>

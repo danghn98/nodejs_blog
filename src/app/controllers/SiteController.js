@@ -1,4 +1,4 @@
-const Cource = require("./models/Course")
+const Cource = require("../models/Course")
 const { multipleMongooseToObject } = require("../../util/mongoose")
 
 class SiteController {
