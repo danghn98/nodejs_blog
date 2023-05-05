@@ -1,8 +1,8 @@
 <div class="mt-4">
   <div class="container">
     <div>
-      <h3>My courses</h3>
-      <a href="/me/trash/courses">Trash</a>
+      <a href="/me/stored/courses">Course List</a>
+      <h3>My courses trash</h3>
     </div>
     <table class="table table-striped mt-4">
       <thead>
@@ -21,21 +21,21 @@
             <td>{{this.slug}}</td>
             <td>{{this.createdAt}}</td>
             <td>
-              <a href="/courses/{{this._id}}/edit" class="btn btn-link">Edit</a>
+              <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Restore</a>
               <a
                 href=""
                 class="btn btn-link"
                 data-id="{{this._id}}"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-              >Delete</a>
+              >Delete forever</a>
             </td>
           </tr>
         {{else}}
           <tr>
             <td colspan="5" class="text-center">
-              Not found any records.
-              <a href="/courses/create">Add new record</a>
+              Empty trash.
+              <a href="/me/stored/courses">Course list</a>
             </td>
           </tr>
         {{/each}}
@@ -80,12 +80,14 @@
   </div>
 </div>
 
-{{! Delete hidden form }}
 <form name="delete-course-form" method="post"></form>
+<form name="restore-course-form" method="post"></form>
 
 <script>
   var courseId 
   var deleteForm = document.forms["delete-course-form"] 
+  var restoreForm = document.forms["restore-course-form"] 
+  var btnRestore = document.getElementsByClassName("btn-restore")
 
   var exampleModal = document.getElementById('exampleModal')
   exampleModal.addEventListener('show.bs.modal', function (event) {
@@ -95,7 +97,18 @@
 
   var btnDeleteCourse = document.getElementById("btn-delete-course")
   btnDeleteCourse.addEventListener("click", function() { 
-    deleteForm.action = "/courses/" + courseId + "?_method=DELETE" 
+    deleteForm.action = "/courses/" + courseId + "/force?_method=DELETE" 
     deleteForm.submit() 
   })
+
+
+  for (btn of btnRestore) {
+    btn.addEventListener("click", function(e) {
+      e.preventDefault()
+      var courId = this.dataset.id
+      restoreForm.action = "/courses/" + courId + "/restore?_method=PATCH" 
+      restoreForm.submit() 
+    })
+  }
+  
 </script>
